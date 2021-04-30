@@ -1,0 +1,11 @@
+# Project exclude paths
+/bin/
+/.settings/
+/target/
+/.idea/
+*.iml
+.project
+.classpath
+dependency-reduced-pom.xml
+.DS_Store
+/.github/Workflows/
