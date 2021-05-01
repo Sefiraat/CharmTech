@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.sefiraat</groupId>
-    <artifactId>charmtech</artifactId>
-    <version>1.1.0</version>
+    <artifactId>CharmTech</artifactId>
+    <version>1.0.0</version>
 
     <build>
         <plugins>

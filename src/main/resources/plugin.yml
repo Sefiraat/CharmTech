@@ -1,0 +1,4 @@
+name: CharmTech
+version: 1.0
+main: io.github.sefiraat.charmtech.CharmTech
+api-version: 1.16
