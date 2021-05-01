@@ -54,7 +54,7 @@ public class Commands extends BaseCommand {
     public class AddCharmEffect extends BaseCommand {
 
         @Default
-        @CommandCompletion("@PotEff @range:1-100 @range:1-20")
+        @CommandCompletion("@PotEff @range:5-100 @range:1-20")
         public void onDefault(CommandSender sender, @Values("@PotEff") String effectType, Integer duration, Integer Efficacy) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;

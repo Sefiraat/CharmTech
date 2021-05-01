@@ -4,10 +4,18 @@ CharmTech is a WIP plugin to give custom, randomised and tiered item drops from 
 
 ## Features
 The plugin currently features:
-* Nothing! WIP
+* Create charms using any possible item
+* Add any potion effect(s) to charms
+* Charms are polled every 5 seconds and effects reapplied
+
+## Planned Features
+* Storing created charms, GUI for recall and adding to drop tables
+* Random charm generation
+* Mob drops using random and / or drop tables
+* A more comprehensive item designer
 
 ## Pages
-* None, seriously i just started this :)
+* None, seriously I just started this :)
 
 
 ## Credits
