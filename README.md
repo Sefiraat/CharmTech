@@ -1,4 +1,4 @@
-<img src="https://github.com/Sefiraat/CharmTech/blob/master/images/wiki/logo_large.png">
+<img src="https://github.com/Sefiraat/CharmTech/blob/master/images/wiki/logo/logo_large.png">
 
 CharmTech is a WIP plugin to give custom, randomised and tiered item drops from mobs and for admins.
 
