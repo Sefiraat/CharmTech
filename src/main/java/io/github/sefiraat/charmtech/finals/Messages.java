@@ -18,4 +18,7 @@ public class Messages {
     public static final String MessageCommandSubcommand = Prefix + Notice + "Please select a valid sub command.";
     public static final String MessageCommandSetCharmMustHold = Prefix + Warning + "You must be holding an item.";
     public static final String MessageCommandSetCharmSuccess = Prefix + Success + "Item converted to charm.";
+    public static final String MessageCommandAddEffectMustCharm = Prefix + Warning + "You must be holding a charm.";
+    public static final String MessageCommandAddEffectSuccess = Prefix + Success + "Effect added to charm.";
+
 }

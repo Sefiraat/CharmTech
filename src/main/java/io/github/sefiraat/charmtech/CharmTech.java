@@ -1,25 +1,35 @@
 package io.github.sefiraat.charmtech;
 
+import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
+import com.google.common.collect.ImmutableList;
 import io.github.sefiraat.charmtech.commands.Commands;
 import io.github.sefiraat.charmtech.timers.InventoryCheck;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Timer;
+
+import static co.aikar.commands.PaperCommandManager.*;
 
 public class CharmTech extends JavaPlugin {
 
     private CharmTech instance;
 
-    private PaperCommandManager CommandManager;
+    private CommandManager commandManager;
     private final Timer repeater = new Timer();
 
-    public PaperCommandManager getCommandManager() {
-        return CommandManager;
+    private InventoryCheck inventoryCheckTask;
+
+    public CommandManager getCommandManager() {
+        return commandManager;
     }
     public CharmTech getInstance() {
         return instance;
     }
+
+
 
     @Override
     public void onEnable() {
@@ -35,18 +45,74 @@ public class CharmTech extends JavaPlugin {
 
         instance = this;
 
-        instance = this;
-
         saveDefaultConfig();
         registerCommands();
 
-        repeater.schedule(new InventoryCheck(this.getInstance()),0, 2000);
+        inventoryCheckTask = new InventoryCheck(this.instance);
+        inventoryCheckTask.runTaskTimer(this.instance, 0, 100L);
 
     }
 
     private void registerCommands() {
-        CommandManager = new PaperCommandManager(this.getInstance());
-        CommandManager.registerCommand(new Commands(this.getInstance()));
+
+        commandManager = new PaperCommandManager(this.getInstance());
+        commandManager.registerCommand(new Commands(this.getInstance()));
+
+        commandManager.getCommandCompletions().registerCompletion("PotEff", c -> {
+            return ImmutableList.of(
+                    "ABSORPTION",
+                    "BAD_OMEN",
+                    "BLINDNESS",
+                    "CONDUIT_POWER",
+                    "CONFUSION",
+                    "DAMAGE_RESISTANCE",
+                    "DOLPHINS_GRACE",
+                    "FAST_DIGGING",
+                    "FIRE_RESISTANCE",
+                    "GLOWING",
+                    "HARM",
+                    "HEAL",
+                    "HEALTH_BOOST",
+                    "HERO_OF_THE_VILLAGE",
+                    "HUNGER",
+                    "INCREASE_DAMAGE",
+                    "INVISIBILITY",
+                    "JUMP",
+                    "LEVITATION",
+                    "LUCK",
+                    "NIGHT_VISION",
+                    "POISON",
+                    "REGENERATION",
+                    "SATURATION",
+                    "SLOW",
+                    "SLOW_DIGGING",
+                    "SLOW_FALLING",
+                    "SPEED",
+                    "UNLUCK",
+                    "WATER_BREATHING",
+                    "WEAKNESS",
+                    "WITHER"
+            );
+        });
+
+        commandManager.getCommandCompletions().registerCompletion("EffReq", c -> {
+            return ImmutableList.of(
+                "ALL",
+                "MAIN_HAND",
+                "OFF_HAND",
+                "ARMOUR"
+            );
+        });
+
+    }
+
+    public void setUpSchedules() {
+        Bukkit.getScheduler().runTaskTimer(instance, new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.broadcastMessage("This message is shown immediately and then repeated every second");
+            }
+        }, 0L, 200L); //0 Tick initial delay, 20 Tick (1 Second) between repeats
     }
 
 
