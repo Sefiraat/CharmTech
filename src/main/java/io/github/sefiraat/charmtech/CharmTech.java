@@ -4,12 +4,17 @@ import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
 import com.google.common.collect.ImmutableList;
 import io.github.sefiraat.charmtech.commands.Commands;
+import io.github.sefiraat.charmtech.implimentation.charms.EnchantCharm;
 import io.github.sefiraat.charmtech.listeners.RightClickListener;
 import io.github.sefiraat.charmtech.timers.InventoryCheck;
 import org.bstats.bukkit.Metrics;
+import org.bukkit.NamespacedKey;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.lang.reflect.Field;
 import java.util.Timer;
+import java.util.logging.Level;
 
 public class CharmTech extends JavaPlugin {
 
@@ -20,6 +25,8 @@ public class CharmTech extends JavaPlugin {
 
     private InventoryCheck inventoryCheckTask;
 
+    private EnchantCharm enchantCharm;
+
     public CommandManager getCommandManager() {
         return commandManager;
     }
@@ -27,7 +34,9 @@ public class CharmTech extends JavaPlugin {
         return instance;
     }
 
-
+    public EnchantCharm getEnchantCharm() {
+        return enchantCharm;
+    }
 
     @Override
     public void onEnable() {
@@ -54,6 +63,27 @@ public class CharmTech extends JavaPlugin {
         int pluginId = 11209;
         Metrics metrics = new Metrics(this, pluginId);
 
+        enchantCharm = new EnchantCharm(new NamespacedKey(this,"charm"));
+
+    }
+
+    private void registerEnchants(Enchantment enchantment) {
+        try {
+            try {
+                Field f = Enchantment.class.getDeclaredField("acceptingNew");
+                f.setAccessible(true);
+                f.set(null, true);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try {
+                Enchantment.registerEnchantment(enchantment);
+            } catch (IllegalArgumentException e) {
+                //if this is thrown it means the id is already taken.
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void registerCommands() {
