@@ -7,13 +7,9 @@ import io.github.sefiraat.charmtech.commands.Commands;
 import io.github.sefiraat.charmtech.listeners.RightClickListener;
 import io.github.sefiraat.charmtech.timers.InventoryCheck;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Timer;
-
-import static co.aikar.commands.PaperCommandManager.*;
 
 public class CharmTech extends JavaPlugin {
 
@@ -114,17 +110,5 @@ public class CharmTech extends JavaPlugin {
                 "ARMOUR_FEET"
             );
         });
-
     }
-
-    public void setUpSchedules() {
-        Bukkit.getScheduler().runTaskTimer(instance, new BukkitRunnable() {
-            @Override
-            public void run() {
-                Bukkit.broadcastMessage("This message is shown immediately and then repeated every second");
-            }
-        }, 0L, 200L); //0 Tick initial delay, 20 Tick (1 Second) between repeats
-    }
-
-
 }

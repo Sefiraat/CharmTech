@@ -1,9 +1,7 @@
 package io.github.sefiraat.charmtech.timers;
 
-import com.sun.tools.javac.jvm.Items;
 import io.github.sefiraat.charmtech.CharmTech;
 import io.github.sefiraat.charmtech.lib.utils.Flags;
-import io.github.sefiraat.charmtech.lib.utils.Utils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
@@ -11,8 +9,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.TimerTask;
-import java.util.function.Predicate;
 
 import static io.github.sefiraat.charmtech.lib.utils.Utils.getPlayerCharms;
 import static io.github.sefiraat.charmtech.lib.utils.Utils.getPotionTypeFromString;
@@ -44,18 +40,21 @@ public class InventoryCheck extends BukkitRunnable {
                             switch (effReq) {
                                 case "ALL": {
                                     addEffect(p, effectName, duration, efficacy);
+                                    break;
                                 }
                                 case "MAIN_HAND": {
                                     ItemStack testStack = p.getInventory().getItemInMainHand();
                                     if (testStack != null && testStack.equals(i)) {
                                         addEffect(p, effectName, duration, efficacy);
                                     }
+                                    break;
                                 }
                                 case "OFF_HAND": {
                                     ItemStack testStack = p.getInventory().getItemInOffHand();
                                     if (testStack != null && testStack.equals(i)) {
                                         addEffect(p, effectName, duration, efficacy);
                                     }
+                                    break;
                                 }
                                 case "ARMOUR_ALL": {
                                     for (ItemStack testStack : p.getInventory().getArmorContents()) {
@@ -63,30 +62,35 @@ public class InventoryCheck extends BukkitRunnable {
                                             addEffect(p, effectName, duration, efficacy);
                                         }
                                     }
+                                    break;
                                 }
                                 case "ARMOUR_HELM": {
                                     ItemStack testStack = p.getInventory().getHelmet();
                                     if (testStack != null && testStack.equals(i)) {
                                         addEffect(p, effectName, duration, efficacy);
                                     }
+                                    break;
                                 }
                                 case "ARMOUR_CHEST": {
                                     ItemStack testStack = p.getInventory().getChestplate();
                                     if (testStack != null && testStack.equals(i)) {
                                         addEffect(p, effectName, duration, efficacy);
                                     }
+                                    break;
                                 }
                                 case "ARMOUR_LEGS": {
                                     ItemStack testStack = p.getInventory().getLeggings();
                                     if (testStack != null && testStack.equals(i)) {
                                         addEffect(p, effectName, duration, efficacy);
                                     }
+                                    break;
                                 }
                                 case "ARMOUR_FEET": {
                                     ItemStack testStack = p.getInventory().getBoots();
                                     if (testStack != null && testStack.equals(i)) {
                                         addEffect(p, effectName, duration, efficacy);
                                     }
+                                    break;
                                 }
                             }
                         }

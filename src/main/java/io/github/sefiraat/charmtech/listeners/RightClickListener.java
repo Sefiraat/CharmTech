@@ -2,17 +2,14 @@ package io.github.sefiraat.charmtech.listeners;
 
 import io.github.sefiraat.charmtech.CharmTech;
 import io.github.sefiraat.charmtech.lib.utils.Flags;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.ItemStack;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class RightClickListener implements Listener {
 

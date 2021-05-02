@@ -1,23 +1,13 @@
 package io.github.sefiraat.charmtech.lib.utils;
 
-import com.google.common.collect.ImmutableList;
 import io.github.sefiraat.charmtech.CharmTech;
-import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.potion.Potion;
-import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import static io.github.sefiraat.charmtech.lib.utils.Flags.flagIsCharm;
 
 public class Utils {
 
