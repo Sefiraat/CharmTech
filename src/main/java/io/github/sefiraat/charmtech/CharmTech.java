@@ -4,7 +4,9 @@ import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
 import com.google.common.collect.ImmutableList;
 import io.github.sefiraat.charmtech.commands.Commands;
+import io.github.sefiraat.charmtech.listeners.RightClickListener;
 import io.github.sefiraat.charmtech.timers.InventoryCheck;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -50,6 +52,11 @@ public class CharmTech extends JavaPlugin {
 
         inventoryCheckTask = new InventoryCheck(this.instance);
         inventoryCheckTask.runTaskTimer(this.instance, 0, 100L);
+
+        new RightClickListener(this.instance);
+
+        int pluginId = 11209;
+        Metrics metrics = new Metrics(this, pluginId);
 
     }
 
@@ -100,7 +107,11 @@ public class CharmTech extends JavaPlugin {
                 "ALL",
                 "MAIN_HAND",
                 "OFF_HAND",
-                "ARMOUR"
+                "ARMOUR_ALL",
+                "ARMOUR_HELM",
+                "ARMOUR_CHEST",
+                "ARMOUR_LEGS",
+                "ARMOUR_FEET"
             );
         });
 

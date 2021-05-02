@@ -1,5 +1,6 @@
 package io.github.sefiraat.charmtech.lib.utils;
 
+import com.google.common.collect.ImmutableList;
 import io.github.sefiraat.charmtech.CharmTech;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static io.github.sefiraat.charmtech.lib.utils.Flags.flagIsCharm;
@@ -24,7 +26,9 @@ public class Utils {
         List<ItemStack> l = new ArrayList<>();
         for (ItemStack i : p.getInventory().getContents()) {
             if (i != null) {
-                if (Flags.hasFlagIsCharm(plugin, i)) {l.add(i);}
+                if (Flags.hasFlagIsCharm(plugin, i)) {
+                    l.add(i);
+                }
             }
         }
         if (l.size() > 0) {
@@ -71,5 +75,6 @@ public class Utils {
             default: { return PotionEffectType.LUCK; }
         }
     }
+
 
 }

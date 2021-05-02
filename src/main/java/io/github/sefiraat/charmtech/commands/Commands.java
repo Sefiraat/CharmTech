@@ -54,14 +54,14 @@ public class Commands extends BaseCommand {
     public class AddCharmEffect extends BaseCommand {
 
         @Default
-        @CommandCompletion("@PotEff @range:5-100 @range:1-20")
-        public void onDefault(CommandSender sender, @Values("@PotEff") String effectType, Integer duration, Integer Efficacy) {
+        @CommandCompletion("@PotEff @range:5-100 @range:1-20 @EffReq")
+        public void onDefault(CommandSender sender, @Values("@PotEff") String effectType, Integer duration, Integer Efficacy, @Values("@EffReq") String EffReq) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
                 if (i != null) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
-                        String effectString = "{" + effectType + "," + (duration * 20) + "," + (Efficacy - 1) + "}";
+                        String effectString = "{" + effectType + "," + (duration * 20) + "," + (Efficacy - 1) + "," + EffReq + "}";
                         Flags.addFlagEffect(parent, i, effectString);
                         p.sendMessage(Messages.MessageCommandAddEffectSuccess);
                     } else {
