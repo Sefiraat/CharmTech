@@ -19,6 +19,14 @@ public class Messages {
     public static final String MessageCommandSetCharmMustHold = Prefix + Warning + "You must be holding an item.";
     public static final String MessageCommandSetCharmSuccess = Prefix + Success + "Item converted to charm.";
     public static final String MessageCommandAddEffectMustCharm = Prefix + Warning + "You must be holding a charm.";
-    public static final String MessageCommandAddEffectSuccess = Prefix + Success + "Effect added to charm.";
+    public static final String MessageCommandAddEffectSuccess = Prefix + Success + "Effect set added to charm.";
+    public static final String MessageCommandCharmSaved = Prefix + Success + "Charm added to library.";
+    public static final String MessageCommandAddMythosSuccess = Prefix + Success + "Mythos set.";
+    public static final String MessageCommandAddLoreSuccess = Prefix + Success + "Lore line set.";
+    public static final String MessageCommandAddValueSuccess = Prefix + Success + "Value set.";
 
+    // GUI - Admin
+
+    public static final String MessageGUICharmDeleted = Prefix + Warning + "Charm Deleted.";
+    public static final String MessageGUICharmGiven = Prefix + Success + "Charm summoned.";
 }

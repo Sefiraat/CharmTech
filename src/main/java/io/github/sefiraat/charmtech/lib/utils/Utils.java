@@ -1,8 +1,14 @@
 package io.github.sefiraat.charmtech.lib.utils;
 
 import io.github.sefiraat.charmtech.CharmTech;
+import io.github.sefiraat.charmtech.finals.ItemDetails;
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 
 import javax.annotation.Nullable;
@@ -28,6 +34,38 @@ public class Utils {
         }
     }
 
+    public static long getNextItemID(CharmTech plugin) {
+        ConfigurationSection sec = plugin.getInstance().getCharmItemsConfig().getConfigurationSection("CHARMS");
+        int nextValue = 1;
+        if (sec != null) {
+            for (String key : sec.getKeys(false)) {
+                int value = Integer.parseInt(key);
+                if (value > nextValue) {
+                    nextValue = value;
+                }
+            }
+            nextValue++;
+        }
+        return nextValue;
+    }
+
+    public static List<ItemStack> getAllCharms(CharmTech plugin) {
+        List<ItemStack> l = new ArrayList<>();
+        ConfigurationSection sec = plugin.getInstance().getCharmItemsConfig().getConfigurationSection("CHARMS");
+        if (sec != null) {
+            for (String s : sec.getKeys(false)) {
+                Long charmID = Long.valueOf(s);
+                ItemStack i = plugin.getInstance().getCharmItemsConfig().getItemStack("CHARMS." + charmID + ".ITEM");
+                NamespacedKey key = new NamespacedKey(plugin,"charm-id");
+                ItemMeta im = i.getItemMeta();
+                im.getPersistentDataContainer().set(key, PersistentDataType.LONG, charmID);
+                i.setItemMeta(im);
+                l.add(i.clone());
+            }
+        }
+        return l;
+    }
+
     public static PotionEffectType getPotionTypeFromString(String s) {
         switch (s) {
             case "ABSORPTION": { return PotionEffectType.ABSORPTION; }
@@ -49,7 +87,6 @@ public class Utils {
             case "INVISIBILITY": { return PotionEffectType.INVISIBILITY; }
             case "JUMP": { return PotionEffectType.JUMP; }
             case "LEVITATION": { return PotionEffectType.LEVITATION; }
-            case "LUCK": { return PotionEffectType.LUCK; }
             case "NIGHT_VISION": { return PotionEffectType.NIGHT_VISION; }
             case "POISON": { return PotionEffectType.POISON; }
             case "REGENERATION": { return PotionEffectType.REGENERATION; }
@@ -62,9 +99,79 @@ public class Utils {
             case "WATER_BREATHING": { return PotionEffectType.WATER_BREATHING; }
             case "WEAKNESS": { return PotionEffectType.WEAKNESS; }
             case "WITHER": { return PotionEffectType.WITHER; }
+            case "LUCK":
             default: { return PotionEffectType.LUCK; }
         }
     }
 
+    public static List<String> buildLore(CharmTech plugin, ItemStack i) {
+        List<String> l = new ArrayList<>();
+        if (Flags.hasFlagLore1(plugin, i)) {
+            l.add(ChatColor.GRAY + Flags.getFlagLore1(plugin, i));
+        }
+        if (Flags.hasFlagLore2(plugin, i)) {
+            l.add(ChatColor.GRAY + Flags.getFlagLore2(plugin, i));
+        }
+        if (Flags.hasFlagLore3(plugin, i)) {
+            l.add(ChatColor.GRAY + Flags.getFlagLore3(plugin, i));
+        }
+        if (Flags.hasFlagLore4(plugin, i)) {
+            l.add(ChatColor.GRAY + Flags.getFlagLore4(plugin, i));
+        }
+        if (Flags.hasFlagLore5(plugin, i)) {
+            l.add(ChatColor.GRAY + Flags.getFlagLore5(plugin, i));
+        }
+        return l;
+    }
+
+    public static void rebuildCharmMeta(CharmTech plugin, ItemStack i) {
+        String mythos = Flags.getFlagMythos(plugin, i);
+        String name = Flags.getFlagName(plugin, i);
+        String value = String.valueOf(Flags.getFlagValue(plugin, i));
+        ChatColor col = getMythosColor(mythos);
+        List<String> lore = buildLore(plugin, i);
+        ItemMeta im = i.getItemMeta();
+        im.setDisplayName(col + name);
+        List<String> all = new ArrayList<>();
+        all.add(ChatColor.DARK_PURPLE + "Charm");
+        all.add("");
+        all.add(ChatColor.WHITE + "Item Tier: " + ChatColor.GRAY + "[" + col + getMythosUser(mythos) + ChatColor.GRAY + "]");
+        all.add("");
+        if (lore.size() > 0) {
+            all.add(ChatColor.WHITE + "Item Description:");
+            for (String s : lore) {
+                all.add(s);
+            }
+            all.add("");
+        }
+        if (value.equals("-1")) {
+            value = "Priceless";
+        }
+        all.add(ChatColor.WHITE + "Value: " + ChatColor.GOLD + "⛃ " + value);
+        im.setLore(all);
+        i.setItemMeta(im);
+    }
+
+    public static ChatColor getMythosColor(String s) {
+        switch(s) {
+            case "COMMON": return ItemDetails.colorRarity2;
+            case "UNCOMMON": return ItemDetails.colorRarity3;
+            case "RARE": return ItemDetails.colorRarity4;
+            case "EPIC": return ItemDetails.colorRarity5;
+            case "LEGENDARY": return ItemDetails.colorRarity6;
+            default: return ItemDetails.colorRarity1;
+        }
+    }
+
+    public static String getMythosUser(String s) {
+        switch(s) {
+            case "COMMON": return "Common";
+            case "UNCOMMON": return "Uncommon";
+            case "RARE": return "Rare";
+            case "EPIC": return "Epic";
+            case "LEGENDARY": return "Legendary";
+            default: return "Trash";
+        }
+    }
 
 }

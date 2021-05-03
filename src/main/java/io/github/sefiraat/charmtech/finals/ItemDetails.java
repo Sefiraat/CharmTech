@@ -20,4 +20,6 @@ public class ItemDetails {
 
     public static final String additionalEffects = "" + ChatColor.RED + "Additional Effects:";
 
+    public static final String GUIDisplayNameFiller = "" + ChatColor.GRAY + "Aren't you charming?";
+    public static final String GUICharmDeleted = "" + ChatColor.RED + "Charm Deleted";
 }

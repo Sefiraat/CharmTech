@@ -1,0 +1,9 @@
+mob-drops-enabled: true
+mob-drops-rate-nothing: 900
+mob-drops-rate-rarity1: 55
+mob-drops-rate-rarity2: 20
+mob-drops-rate-rarity3: 15
+mob-drops-rate-rarity4: 10
+mob-drops-rate-rarity5: 7
+mob-drops-rate-rarity6: 3
+mob-drops-allow-spawners: false

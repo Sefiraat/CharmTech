@@ -4,17 +4,20 @@ import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
 import com.google.common.collect.ImmutableList;
 import io.github.sefiraat.charmtech.commands.Commands;
-import io.github.sefiraat.charmtech.implimentation.charms.EnchantCharm;
 import io.github.sefiraat.charmtech.listeners.RightClickListener;
 import io.github.sefiraat.charmtech.timers.InventoryCheck;
+import io.github.sefiraat.charmtech.timers.TimerSave;
 import org.bstats.bukkit.Metrics;
-import org.bukkit.NamespacedKey;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Timer;
-import java.util.logging.Level;
 
 public class CharmTech extends JavaPlugin {
 
@@ -22,10 +25,10 @@ public class CharmTech extends JavaPlugin {
 
     private CommandManager commandManager;
     private final Timer repeater = new Timer();
-
+    private File CharmItemsConfigFile;
+    private FileConfiguration CharmItemsConfig;
     private InventoryCheck inventoryCheckTask;
-
-    private EnchantCharm enchantCharm;
+    private final Timer Repeater = new Timer();
 
     public CommandManager getCommandManager() {
         return commandManager;
@@ -33,9 +36,11 @@ public class CharmTech extends JavaPlugin {
     public CharmTech getInstance() {
         return instance;
     }
-
-    public EnchantCharm getEnchantCharm() {
-        return enchantCharm;
+    public File getCharmItemsConfigFile() {
+        return CharmItemsConfigFile;
+    }
+    public FileConfiguration getCharmItemsConfig() {
+        return CharmItemsConfig;
     }
 
     @Override
@@ -53,6 +58,7 @@ public class CharmTech extends JavaPlugin {
         instance = this;
 
         saveDefaultConfig();
+        createCharmItemsConfig();
         registerCommands();
 
         inventoryCheckTask = new InventoryCheck(this.instance);
@@ -63,11 +69,11 @@ public class CharmTech extends JavaPlugin {
         int pluginId = 11209;
         Metrics metrics = new Metrics(this, pluginId);
 
-        enchantCharm = new EnchantCharm(new NamespacedKey(this,"charm"));
+        Repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
     }
 
-    private void registerEnchants(Enchantment enchantment) {
+    private void registerEnchant(Enchantment enchantment) {
         try {
             try {
                 Field f = Enchantment.class.getDeclaredField("acceptingNew");
@@ -83,6 +89,28 @@ public class CharmTech extends JavaPlugin {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private void createCharmItemsConfig() {
+        CharmItemsConfigFile = new File(getDataFolder(), "SavedCharms.yml");
+        if (!CharmItemsConfigFile.exists()) {
+            CharmItemsConfigFile.getParentFile().mkdirs();
+            saveResource("SavedCharms.yml", false);
+        }
+        CharmItemsConfig = new YamlConfiguration();
+        try {
+            CharmItemsConfig.load(CharmItemsConfigFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveCharmItemsConfig() {
+        try {
+            CharmItemsConfig.save(CharmItemsConfigFile);
+        } catch (IOException e) {
+            this.getLogger().warning("Unable to save " + CharmItemsConfigFile.getName());
         }
     }
 
@@ -138,6 +166,17 @@ public class CharmTech extends JavaPlugin {
                 "ARMOUR_CHEST",
                 "ARMOUR_LEGS",
                 "ARMOUR_FEET"
+            );
+        });
+
+        commandManager.getCommandCompletions().registerCompletion("Mythos", c -> {
+            return ImmutableList.of(
+                    "TRASH",
+                    "COMMON",
+                    "UNCOMMON",
+                    "RARE",
+                    "EPIC",
+                    "LEGENDARY"
             );
         });
     }
