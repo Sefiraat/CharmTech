@@ -25,10 +25,9 @@ public class CharmTech extends JavaPlugin {
 
     private CommandManager commandManager;
     private final Timer repeater = new Timer();
-    private File CharmItemsConfigFile;
-    private FileConfiguration CharmItemsConfig;
+    private File charmItemsConfigFile;
+    private FileConfiguration charmItemsConfig;
     private InventoryCheck inventoryCheckTask;
-    private final Timer Repeater = new Timer();
 
     public CommandManager getCommandManager() {
         return commandManager;
@@ -37,10 +36,10 @@ public class CharmTech extends JavaPlugin {
         return instance;
     }
     public File getCharmItemsConfigFile() {
-        return CharmItemsConfigFile;
+        return charmItemsConfigFile;
     }
     public FileConfiguration getCharmItemsConfig() {
-        return CharmItemsConfig;
+        return charmItemsConfig;
     }
 
     @Override
@@ -69,38 +68,19 @@ public class CharmTech extends JavaPlugin {
         int pluginId = 11209;
         Metrics metrics = new Metrics(this, pluginId);
 
-        Repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
+        repeater.schedule(new TimerSave(this.getInstance()),0, 30000);
 
-    }
-
-    private void registerEnchant(Enchantment enchantment) {
-        try {
-            try {
-                Field f = Enchantment.class.getDeclaredField("acceptingNew");
-                f.setAccessible(true);
-                f.set(null, true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            try {
-                Enchantment.registerEnchantment(enchantment);
-            } catch (IllegalArgumentException e) {
-                //if this is thrown it means the id is already taken.
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     private void createCharmItemsConfig() {
-        CharmItemsConfigFile = new File(getDataFolder(), "SavedCharms.yml");
-        if (!CharmItemsConfigFile.exists()) {
-            CharmItemsConfigFile.getParentFile().mkdirs();
+        charmItemsConfigFile = new File(getDataFolder(), "SavedCharms.yml");
+        if (!charmItemsConfigFile.exists()) {
+            charmItemsConfigFile.getParentFile().mkdirs();
             saveResource("SavedCharms.yml", false);
         }
-        CharmItemsConfig = new YamlConfiguration();
+        charmItemsConfig = new YamlConfiguration();
         try {
-            CharmItemsConfig.load(CharmItemsConfigFile);
+            charmItemsConfig.load(charmItemsConfigFile);
         } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
@@ -108,9 +88,9 @@ public class CharmTech extends JavaPlugin {
 
     public void saveCharmItemsConfig() {
         try {
-            CharmItemsConfig.save(CharmItemsConfigFile);
+            charmItemsConfig.save(charmItemsConfigFile);
         } catch (IOException e) {
-            this.getLogger().warning("Unable to save " + CharmItemsConfigFile.getName());
+            this.getLogger().warning("Unable to save " + charmItemsConfigFile.getName());
         }
     }
 
@@ -119,8 +99,7 @@ public class CharmTech extends JavaPlugin {
         commandManager = new PaperCommandManager(this.getInstance());
         commandManager.registerCommand(new Commands(this.getInstance()));
 
-        commandManager.getCommandCompletions().registerCompletion("PotEff", c -> {
-            return ImmutableList.of(
+        commandManager.getCommandCompletions().registerCompletion("PotEff", c ->  ImmutableList.of(
                     "ABSORPTION",
                     "BAD_OMEN",
                     "BLINDNESS",
@@ -153,11 +132,9 @@ public class CharmTech extends JavaPlugin {
                     "WATER_BREATHING",
                     "WEAKNESS",
                     "WITHER"
-            );
-        });
+        ));
 
-        commandManager.getCommandCompletions().registerCompletion("EffReq", c -> {
-            return ImmutableList.of(
+        commandManager.getCommandCompletions().registerCompletion("EffReq", c -> ImmutableList.of(
                 "ALL",
                 "MAIN_HAND",
                 "OFF_HAND",
@@ -166,18 +143,15 @@ public class CharmTech extends JavaPlugin {
                 "ARMOUR_CHEST",
                 "ARMOUR_LEGS",
                 "ARMOUR_FEET"
-            );
-        });
+        ));
 
-        commandManager.getCommandCompletions().registerCompletion("Mythos", c -> {
-            return ImmutableList.of(
+        commandManager.getCommandCompletions().registerCompletion("Mythos", c -> ImmutableList.of(
                     "TRASH",
                     "COMMON",
                     "UNCOMMON",
                     "RARE",
                     "EPIC",
                     "LEGENDARY"
-            );
-        });
+        ));
     }
 }

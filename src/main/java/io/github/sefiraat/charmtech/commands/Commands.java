@@ -3,12 +3,13 @@ package io.github.sefiraat.charmtech.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import io.github.sefiraat.charmtech.CharmTech;
-import io.github.sefiraat.charmtech.GUI.Charm_Admin_Display;
+import io.github.sefiraat.charmtech.gui.CharmAdminDisplay;
 import io.github.sefiraat.charmtech.finals.Messages;
 import io.github.sefiraat.charmtech.lib.utils.Flags;
 import io.github.sefiraat.charmtech.lib.utils.Utils;
 import jdk.jfr.Description;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -20,14 +21,14 @@ public class Commands extends BaseCommand {
 
     public final CharmTech parent;
 
-    public Commands(CharmTech Parent) {
-        this.parent = Parent;
+    public Commands(CharmTech parent) {
+        this.parent = parent;
     }
 
     @Default
     public void onDefault(CommandSender sender) {
         if (sender instanceof Player) {
-            sender.sendMessage(Messages.MessageCommandSubcommand);
+            sender.sendMessage(Messages.MESSAGE_COMMAND_SUBCOMMAND);
         }
     }
 
@@ -42,15 +43,15 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
-                if (i != null) {
+                if (i.getType() != Material.AIR) {
                     Flags.addFlagIsCharm(parent, i);
                     Flags.addFlagName(parent, i, charmName);
                     Flags.addFlagMythos(parent, i, mythos);
                     Flags.addFlagValue(parent, i, value);
                     Utils.rebuildCharmMeta(parent, i);
-                    p.sendMessage(Messages.MessageCommandSetCharmSuccess);
+                    p.sendMessage(Messages.MESSAGE_COMMAND_SET_CHARM_SUCCESS);
                 } else {
-                    p.sendMessage(Messages.MessageCommandSetCharmMustHold);
+                    p.sendMessage(Messages.MESSAGE_COMMAND_SET_CHARM_MUST_HOLD);
                 }
             }
         }
@@ -65,20 +66,20 @@ public class Commands extends BaseCommand {
         @CommandPermission("CharmTech.Admin")
         @Description("Adds a charm effect selected ItemStack")
         @CommandCompletion("@PotEff @range:5-100 @range:1-20 @EffReq")
-        public void onAddEffect(CommandSender sender, @Values("@PotEff") String effectType, Integer duration, Integer Efficacy, @Values("@EffReq") String EffReq) {
+        public void onAddEffect(CommandSender sender, @Values("@PotEff") String effectType, Integer duration, Integer efficacy, @Values("@EffReq") String effReq) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
-                if (i != null) {
+                if (i.getType() != Material.AIR) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
-                        String effectString = "{" + effectType + "," + (duration * 20) + "," + (Efficacy - 1) + "," + EffReq + "}";
+                        String effectString = "{" + effectType + "," + (duration * 20) + "," + (efficacy - 1) + "," + effReq + "}";
                         Flags.addFlagEffect(parent, i, effectString);
-                        p.sendMessage(Messages.MessageCommandAddEffectSuccess);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_EFFECT_SUCCESS);
                     } else {
-                        p.sendMessage(Messages.MessageCommandAddEffectMustCharm);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_EFFECT_MUST_CHARM);
                     }
                 } else {
-                    p.sendMessage(Messages.MessageCommandSetCharmMustHold);
+                    p.sendMessage(Messages.MESSAGE_COMMAND_SET_CHARM_MUST_HOLD);
                 }
             }
         }
@@ -91,7 +92,7 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
-                if (i != null) {
+                if (i.getType() != Material.AIR) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
                         switch (lineNo) {
                             case 1: {
@@ -116,12 +117,12 @@ public class Commands extends BaseCommand {
                             }
                         }
                         Utils.rebuildCharmMeta(parent, i);
-                        p.sendMessage(Messages.MessageCommandAddLoreSuccess);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_LORE_SUCCESS);
                     } else {
-                        p.sendMessage(Messages.MessageCommandAddEffectMustCharm);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_EFFECT_MUST_CHARM);
                     }
                 } else {
-                    p.sendMessage(Messages.MessageCommandSetCharmMustHold);
+                    p.sendMessage(Messages.MESSAGE_COMMAND_SET_CHARM_MUST_HOLD);
                 }
             }
         }
@@ -134,16 +135,16 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
-                if (i != null) {
+                if (i.getType() != Material.AIR) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
                         Flags.addFlagMythos(parent, i, mythos);
                         Utils.rebuildCharmMeta(parent, i);
-                        p.sendMessage(Messages.MessageCommandAddEffectSuccess);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_EFFECT_SUCCESS);
                     } else {
-                        p.sendMessage(Messages.MessageCommandAddMythosSuccess);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_MYTHOS_SUCCESS);
                     }
                 } else {
-                    p.sendMessage(Messages.MessageCommandSetCharmMustHold);
+                    p.sendMessage(Messages.MESSAGE_COMMAND_SET_CHARM_MUST_HOLD);
                 }
             }
         }
@@ -156,16 +157,16 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
-                if (i != null) {
+                if (i.getType() != Material.AIR) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
                         Flags.addFlagValue(parent, i, value);
                         Utils.rebuildCharmMeta(parent, i);
-                        p.sendMessage(Messages.MessageCommandAddValueSuccess);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_VALUE_SUCCESS);
                     } else {
-                        p.sendMessage(Messages.MessageCommandAddEffectMustCharm);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_EFFECT_MUST_CHARM);
                     }
                 } else {
-                    p.sendMessage(Messages.MessageCommandSetCharmMustHold);
+                    p.sendMessage(Messages.MESSAGE_COMMAND_SET_CHARM_MUST_HOLD);
                 }
             }
         }
@@ -182,19 +183,19 @@ public class Commands extends BaseCommand {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
-                if (i != null) {
+                if (i.getType() != Material.AIR) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
                         long nextItem = Utils.getNextItemID(parent);
                         FileConfiguration c = parent.getCharmItemsConfig();
                         c.createSection("CHARMS." + nextItem);
                         c.set("CHARMS." + nextItem + ".ITEM", i);
                         parent.saveCharmItemsConfig();
-                        p.sendMessage(Messages.MessageCommandCharmSaved);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_CHARM_SAVED);
                     } else {
-                        p.sendMessage(Messages.MessageCommandAddEffectMustCharm);
+                        p.sendMessage(Messages.MESSAGE_COMMAND_ADD_EFFECT_MUST_CHARM);
                     }
                 } else {
-                    p.sendMessage(Messages.MessageCommandSetCharmMustHold);
+                    p.sendMessage(Messages.MESSAGE_COMMAND_SET_CHARM_MUST_HOLD);
                 }
             }
         }
@@ -210,7 +211,7 @@ public class Commands extends BaseCommand {
         public void onDefault(CommandSender sender) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
-                PaginatedGui adminGUI = Charm_Admin_Display.getDankAdminGUI(parent);
+                PaginatedGui adminGUI = CharmAdminDisplay.getDankAdminGUI(parent);
                 adminGUI.open(p);
             }
         }

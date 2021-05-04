@@ -38,10 +38,6 @@ public class InventoryCheck extends BukkitRunnable {
                             Integer efficacy = Integer.valueOf(effectDetails.get(2));
                             String effReq = effectDetails.get(3);
                             switch (effReq) {
-                                case "ALL": {
-                                    addEffect(p, effectName, duration, efficacy);
-                                    break;
-                                }
                                 case "MAIN_HAND": {
                                     ItemStack testStack = p.getInventory().getItemInMainHand();
                                     if (testStack != null && testStack.equals(i)) {
@@ -90,6 +86,10 @@ public class InventoryCheck extends BukkitRunnable {
                                     if (testStack != null && testStack.equals(i)) {
                                         addEffect(p, effectName, duration, efficacy);
                                     }
+                                    break;
+                                }
+                                default: {
+                                    addEffect(p, effectName, duration, efficacy);
                                     break;
                                 }
                             }

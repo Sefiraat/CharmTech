@@ -1,4 +1,4 @@
-package io.github.sefiraat.charmtech.GUI;
+package io.github.sefiraat.charmtech.gui;
 
 import io.github.sefiraat.charmtech.CharmTech;
 import io.github.sefiraat.charmtech.finals.GUIItems;
@@ -21,8 +21,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Charm_Admin_Display {
+public class CharmAdminDisplay {
 
+    private CharmAdminDisplay() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static PaginatedGui getDankAdminGUI(CharmTech parent) {
 
@@ -33,7 +36,7 @@ public class Charm_Admin_Display {
 
         PaginatedGui g = new PaginatedGui(6, "Charms Admin GUI");
 
-        g.setItem(listFillerSlots, GUIItems.GUIPackFiller());
+        g.setItem(listFillerSlots, GUIItems.guiPackFiller());
         g.setItem(backSlot, ItemBuilder.from(Material.PAPER).setName("Previous").asGuiItem(event -> g.previous()));
         g.setItem(forwardSlot, ItemBuilder.from(Material.PAPER).setName("Next").asGuiItem(event -> g.next()));
 
@@ -52,14 +55,12 @@ public class Charm_Admin_Display {
             i.setItemMeta(im);
             NamespacedKey key = new NamespacedKey(parent,"charm-id");
             long charmID = im.getPersistentDataContainer().get(key, PersistentDataType.LONG);
-            GuiItem dankGuiItem = new GuiItem(i, event -> {
-                adminClickCharm(event, charmID, parent, g);
-            });
+            GuiItem dankGuiItem = new GuiItem(i, event -> adminClickCharm(event, charmID, parent, g));
             g.addItem(dankGuiItem);
         }
 
-        g.setDefaultClickAction(event -> { event.setCancelled(true); });
-        g.setDragAction(event -> { event.setCancelled(true); });
+        g.setDefaultClickAction(event -> event.setCancelled(true));
+        g.setDragAction(event -> event.setCancelled(true));
 
         return g;
     }
@@ -69,11 +70,11 @@ public class Charm_Admin_Display {
         if (event.getClick() == ClickType.LEFT) {
             ItemStack i = plugin.getInstance().getCharmItemsConfig().getItemStack("CHARMS." + charmID + ".ITEM");
             p.getInventory().addItem(i);
-            p.sendMessage(Messages.MessageGUICharmGiven);
+            p.sendMessage(Messages.MESSAGE_GUI_CHARM_GIVEN);
         } else if (event.getClick() == ClickType.SHIFT_RIGHT) {
             plugin.getInstance().getCharmItemsConfig().set("CHARMS." + charmID, null);
             plugin.saveCharmItemsConfig();
-            p.sendMessage(Messages.MessageGUICharmDeleted);
+            p.sendMessage(Messages.MESSAGE_GUI_CHARM_DELETED);
             g.close(p);
         }
     }

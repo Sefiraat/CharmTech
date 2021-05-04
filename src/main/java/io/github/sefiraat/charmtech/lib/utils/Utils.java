@@ -17,17 +17,19 @@ import java.util.List;
 
 public class Utils {
 
+    private Utils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     @Nullable
     public static List<ItemStack> getPlayerCharms(CharmTech plugin, Player p) {
         List<ItemStack> l = new ArrayList<>();
         for (ItemStack i : p.getInventory().getContents()) {
-            if (i != null) {
-                if (Flags.hasFlagIsCharm(plugin, i)) {
-                    l.add(i);
-                }
+            if (i != null && Flags.hasFlagIsCharm(plugin, i)) {
+                l.add(i);
             }
         }
-        if (l.size() > 0) {
+        if (!l.isEmpty()) {
             return l;
         } else {
             return null;
@@ -137,7 +139,7 @@ public class Utils {
         all.add("");
         all.add(ChatColor.WHITE + "Item Tier: " + ChatColor.GRAY + "[" + col + getMythosUser(mythos) + ChatColor.GRAY + "]");
         all.add("");
-        if (lore.size() > 0) {
+        if (!lore.isEmpty()) {
             all.add(ChatColor.WHITE + "Item Description:");
             for (String s : lore) {
                 all.add(s);
@@ -154,12 +156,12 @@ public class Utils {
 
     public static ChatColor getMythosColor(String s) {
         switch(s) {
-            case "COMMON": return ItemDetails.colorRarity2;
-            case "UNCOMMON": return ItemDetails.colorRarity3;
-            case "RARE": return ItemDetails.colorRarity4;
-            case "EPIC": return ItemDetails.colorRarity5;
-            case "LEGENDARY": return ItemDetails.colorRarity6;
-            default: return ItemDetails.colorRarity1;
+            case "COMMON": return ItemDetails.COLOR_RARITY_2;
+            case "UNCOMMON": return ItemDetails.COLOR_RARITY_3;
+            case "RARE": return ItemDetails.COLOR_RARITY_4;
+            case "EPIC": return ItemDetails.COLOR_RARITY_5;
+            case "LEGENDARY": return ItemDetails.COLOR_RARITY_6;
+            default: return ItemDetails.COLOR_RARITY_1;
         }
     }
 

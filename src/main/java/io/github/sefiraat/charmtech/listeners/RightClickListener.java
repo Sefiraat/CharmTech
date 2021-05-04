@@ -22,23 +22,19 @@ public class RightClickListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onRightClick(PlayerInteractEvent e) {
-        if (e.getItem() != null) {
-            if (e.getItem().getItemMeta() != null) {
-                ItemStack i = e.getItem();
-                if (Flags.hasFlagIsCharm(parent, i)) {
-                    e.setCancelled(true);
-                }
+        if (e.getItem() != null && e.getItem().getItemMeta() != null) {
+            ItemStack i = e.getItem();
+            if (Flags.hasFlagIsCharm(parent, i)) {
+                e.setCancelled(true);
             }
         }
     }
     @EventHandler(priority = EventPriority.HIGH)
     public void onConsume(PlayerItemConsumeEvent e) {
-        if (e.getItem() != null) {
-            if (e.getItem().getItemMeta() != null) {
-                ItemStack i = e.getItem();
-                if (Flags.hasFlagIsCharm(parent, i)) {
-                    e.setCancelled(true);
-                }
+        if (e.getItem().getItemMeta() != null) {
+            ItemStack i = e.getItem();
+            if (Flags.hasFlagIsCharm(parent, i)) {
+                e.setCancelled(true);
             }
         }
     }

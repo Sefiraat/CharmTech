@@ -8,8 +8,8 @@ public class TimerSave extends TimerTask {
 
     public final CharmTech parent;
 
-    public TimerSave(CharmTech Parent) {
-        this.parent = Parent;
+    public TimerSave(CharmTech parent) {
+        this.parent = parent;
     }
 
     public void run() {
