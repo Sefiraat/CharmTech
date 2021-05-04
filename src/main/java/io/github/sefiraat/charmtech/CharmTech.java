@@ -11,12 +11,10 @@ import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.Timer;
 
 public class CharmTech extends JavaPlugin {
@@ -151,7 +149,8 @@ public class CharmTech extends JavaPlugin {
                     "UNCOMMON",
                     "RARE",
                     "EPIC",
-                    "LEGENDARY"
+                    "LEGENDARY",
+                    "MYTHIC"
         ));
     }
 }

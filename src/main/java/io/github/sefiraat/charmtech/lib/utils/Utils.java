@@ -161,6 +161,7 @@ public class Utils {
             case "RARE": return ItemDetails.COLOR_RARITY_4;
             case "EPIC": return ItemDetails.COLOR_RARITY_5;
             case "LEGENDARY": return ItemDetails.COLOR_RARITY_6;
+            case "MYTHIC": return  ItemDetails.COLOR_RARITY_7;
             default: return ItemDetails.COLOR_RARITY_1;
         }
     }
@@ -172,6 +173,7 @@ public class Utils {
             case "RARE": return "Rare";
             case "EPIC": return "Epic";
             case "LEGENDARY": return "Legendary";
+            case "MYTHIC": return  "Mythic";
             default: return "Trash";
         }
     }
