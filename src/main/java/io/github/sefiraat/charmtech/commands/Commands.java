@@ -66,14 +66,14 @@ public class Commands extends BaseCommand {
         @Subcommand("AddEffect")
         @CommandPermission("CharmTech.Admin")
         @Description("Adds a charm effect selected ItemStack")
-        @CommandCompletion("@PotEff @range:5-100 @range:1-20 @EffReq")
-        public void onAddEffect(CommandSender sender, @Values("@PotEff") String effectType, Integer duration, Integer efficacy, @Values("@EffReq") String effReq) {
+        @CommandCompletion("@PotEff @range:5-100 @range:1-20 @EffReq @Targets")
+        public void onAddEffect(CommandSender sender, @Values("@PotEff") String effectType, Integer duration, Integer efficacy, @Values("@EffReq") String effReq, @Values("@Targets") String target) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
                 ItemStack i = p.getInventory().getItemInMainHand();
                 if (i.getType() != Material.AIR) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
-                        String effectString = "{" + effectType + "," + (duration * 20) + "," + (efficacy - 1) + "," + effReq + "}";
+                        String effectString = "{" + effectType + "," + (duration * 20) + "," + (efficacy - 1) + "," + effReq + "," + target + "}";
                         Flags.addFlagEffect(parent, i, effectString);
                         p.sendMessage(Messages.MESSAGE_COMMAND_ADD_EFFECT_SUCCESS);
                     } else {

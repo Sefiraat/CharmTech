@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Utils {
 
@@ -176,6 +177,19 @@ public class Utils {
             case "MYTHIC": return  "Mythic";
             default: return "Trash";
         }
+    }
+
+
+
+    /**
+     * @param min Minimum value
+     * @param max Maximum value.  Must be greater than min.
+     * @return Integer between min and max, inclusive.
+     * @see java.util.Random#nextInt(int)
+     */
+    public static int randInt(Random r, int min, int max) {
+        int randomNum = r.nextInt((max - min) + 1) + min;
+        return randomNum;
     }
 
 }
