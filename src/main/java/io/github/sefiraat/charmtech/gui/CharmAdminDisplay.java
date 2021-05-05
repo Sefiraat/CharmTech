@@ -42,6 +42,8 @@ public class CharmAdminDisplay {
 
         for (ItemStack i : Utils.getAllCharms(parent)) {
             ItemMeta im = i.getItemMeta();
+            NamespacedKey key = new NamespacedKey(parent,"charm-id");
+            long charmID = im.getPersistentDataContainer().get(key, PersistentDataType.LONG);
             List<String> lore;
             if (im.hasLore()) {
                 lore = im.getLore();
@@ -51,10 +53,10 @@ public class CharmAdminDisplay {
             lore.add("");
             lore.add(ChatColor.GREEN + "Left click to clone");
             lore.add(ChatColor.GREEN + "Shift Right click delete");
+            lore.add("");
+            lore.add(ChatColor.AQUA + "Saved charm ID: " + String.valueOf(charmID));
             im.setLore(lore);
             i.setItemMeta(im);
-            NamespacedKey key = new NamespacedKey(parent,"charm-id");
-            long charmID = im.getPersistentDataContainer().get(key, PersistentDataType.LONG);
             GuiItem dankGuiItem = new GuiItem(i, event -> adminClickCharm(event, charmID, parent, g));
             g.addItem(dankGuiItem);
         }

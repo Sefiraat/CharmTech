@@ -2,6 +2,7 @@ package io.github.sefiraat.charmtech.commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import io.github.sefiraat.charmtech.CharmTech;
 import io.github.sefiraat.charmtech.finals.Messages;
 import io.github.sefiraat.charmtech.gui.CharmAdminDisplay;
@@ -185,10 +186,12 @@ public class Commands extends BaseCommand {
                 ItemStack i = p.getInventory().getItemInMainHand();
                 if (i.getType() != Material.AIR) {
                     if (Flags.hasFlagIsCharm(parent, i)) {
+                        ItemStack stackToSave = i.clone();
+                        stackToSave.setAmount(1);
                         long nextItem = Utils.getNextItemID(parent);
                         FileConfiguration c = parent.getCharmItemsConfig();
                         c.createSection("CHARMS." + nextItem);
-                        c.set("CHARMS." + nextItem + ".ITEM", i);
+                        c.set("CHARMS." + nextItem + ".ITEM", stackToSave);
                         parent.saveCharmItemsConfig();
                         p.sendMessage(Messages.MESSAGE_COMMAND_CHARM_SAVED);
                     } else {
@@ -213,6 +216,26 @@ public class Commands extends BaseCommand {
                 Player p = (Player) sender;
                 PaginatedGui adminGUI = CharmAdminDisplay.getDankAdminGUI(parent);
                 adminGUI.open(p);
+            }
+        }
+
+    }
+
+    @Subcommand("GiveCharm")
+    @Description("Gives a saved charm to a player")
+    @CommandPermission("DankTech.Admin")
+    public class GiveCharm extends BaseCommand {
+
+        @Default
+        @CommandCompletion("@players <CharmID>")
+        public void onDefault(CommandSender sender, OnlinePlayer onlinePlayer, Integer charmID) {
+            Player p = onlinePlayer.getPlayer();
+            ItemStack i = parent.getInstance().getCharmItemsConfig().getItemStack("CHARMS." + charmID + ".ITEM");
+            if (i != null) {
+                p.getInventory().addItem(i);
+                p.sendMessage(Messages.MESSAGE_COMMAND_GIVE_CHARM);
+            } else {
+                sender.sendMessage(Messages.MESSAGE_COMMAND_GIVE_CHARM_FAILED);
             }
         }
 

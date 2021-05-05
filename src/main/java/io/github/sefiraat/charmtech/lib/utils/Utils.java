@@ -57,12 +57,12 @@ public class Utils {
         if (sec != null) {
             for (String s : sec.getKeys(false)) {
                 Long charmID = Long.valueOf(s);
-                ItemStack i = plugin.getInstance().getCharmItemsConfig().getItemStack("CHARMS." + charmID + ".ITEM");
+                ItemStack i = sec.getItemStack(charmID + ".ITEM").clone();
                 NamespacedKey key = new NamespacedKey(plugin,"charm-id");
                 ItemMeta im = i.getItemMeta();
                 im.getPersistentDataContainer().set(key, PersistentDataType.LONG, charmID);
                 i.setItemMeta(im);
-                l.add(i.clone());
+                l.add(i);
             }
         }
         return l;

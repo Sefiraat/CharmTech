@@ -28,6 +28,8 @@ public class Messages {
     public static final String MESSAGE_COMMAND_ADD_MYTHOS_SUCCESS = PREFIX + SUCCESS + "Mythos set.";
     public static final String MESSAGE_COMMAND_ADD_LORE_SUCCESS = PREFIX + SUCCESS + "Lore line set.";
     public static final String MESSAGE_COMMAND_ADD_VALUE_SUCCESS = PREFIX + SUCCESS + "Value set.";
+    public static final String MESSAGE_COMMAND_GIVE_CHARM = PREFIX + SUCCESS + "You received a charm!";
+    public static final String MESSAGE_COMMAND_GIVE_CHARM_FAILED = PREFIX + ERROR + "The selected charm ID could not be found";
 
     // GUI - Admin
 
