@@ -10,6 +10,8 @@ import io.github.sefiraat.charmtech.lib.utils.Flags;
 import io.github.sefiraat.charmtech.lib.utils.Utils;
 import jdk.jfr.Description;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -234,6 +236,7 @@ public class Commands extends BaseCommand {
             if (i != null) {
                 p.getInventory().addItem(i);
                 p.sendMessage(Messages.MESSAGE_COMMAND_GIVE_CHARM);
+                Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW + p.getDisplayName() + " received " + i.getItemMeta().getDisplayName() + ChatColor.YELLOW + " Charm" );
             } else {
                 sender.sendMessage(Messages.MESSAGE_COMMAND_GIVE_CHARM_FAILED);
             }
