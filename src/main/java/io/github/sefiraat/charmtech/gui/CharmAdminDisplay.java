@@ -1,12 +1,12 @@
 package io.github.sefiraat.charmtech.gui;
 
+import dev.triumphteam.gui.builder.item.ItemBuilder;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import io.github.sefiraat.charmtech.CharmTech;
 import io.github.sefiraat.charmtech.finals.GUIItems;
 import io.github.sefiraat.charmtech.finals.Messages;
 import io.github.sefiraat.charmtech.lib.utils.Utils;
-import me.mattstudios.mfgui.gui.components.ItemBuilder;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -17,9 +17,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataType;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CharmAdminDisplay {
 
@@ -27,12 +29,13 @@ public class CharmAdminDisplay {
         throw new IllegalStateException("Utility class");
     }
 
-    public static PaginatedGui getDankAdminGUI(CharmTech parent) {
+    @Nonnull
+    public static PaginatedGui getAdminGui(@Nonnull CharmTech parent) {
 
-        Integer[] arrayFillerSlots = new Integer[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 45, 47, 48, 49, 50, 51, 53};
-        Integer backSlot = 46;
-        Integer forwardSlot = 52;
-        List<Integer> listFillerSlots = Arrays.asList(arrayFillerSlots);
+        int[] arrayFillerSlots = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 45, 47, 48, 49, 50, 51, 53};
+        int backSlot = 46;
+        int forwardSlot = 52;
+        List<Integer> listFillerSlots = Arrays.stream(arrayFillerSlots).boxed().collect(Collectors.toList());
 
         PaginatedGui g = new PaginatedGui(6, "Charms Admin GUI");
 

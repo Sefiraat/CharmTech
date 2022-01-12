@@ -3,13 +3,13 @@ package io.github.sefiraat.charmtech.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import io.github.sefiraat.charmtech.CharmTech;
 import io.github.sefiraat.charmtech.finals.Messages;
 import io.github.sefiraat.charmtech.gui.CharmAdminDisplay;
 import io.github.sefiraat.charmtech.lib.utils.Flags;
 import io.github.sefiraat.charmtech.lib.utils.Utils;
 import jdk.jfr.Description;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -216,7 +216,7 @@ public class Commands extends BaseCommand {
         public void onDefault(CommandSender sender) {
             if (sender instanceof Player) {
                 Player p = (Player) sender;
-                PaginatedGui adminGUI = CharmAdminDisplay.getDankAdminGUI(parent);
+                PaginatedGui adminGUI = CharmAdminDisplay.getAdminGui(parent);
                 adminGUI.open(p);
             }
         }

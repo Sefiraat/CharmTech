@@ -1,6 +1,6 @@
 package io.github.sefiraat.charmtech.finals;
 
-import me.mattstudios.mfgui.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.GuiItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;

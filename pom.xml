@@ -30,7 +30,7 @@
                         </relocation>
                         <relocation>
                             <pattern>org.bstats</pattern>
-                            <shadedPattern>io.github.sefiraat.danktech.bstats</shadedPattern>
+                            <shadedPattern>io.github.sefiraat.charmtech.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -98,19 +98,23 @@
             <id>aikar</id>
             <url>https://repo.aikar.co/content/groups/aikar/</url>
         </repository>
+        <repository>
+            <id>repo</id>
+            <url>https://repo.mattstudios.me/artifactory/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.16.5-R0.1-SNAPSHOT</version>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>me.mattstudios.utils</groupId>
-            <artifactId>matt-framework-gui</artifactId>
-            <version>2.0.2</version>
+            <groupId>dev.triumphteam</groupId>
+            <artifactId>triumph-gui</artifactId>
+            <version>3.0.5</version>
         </dependency>
         <dependency>
             <groupId>co.aikar</groupId>
